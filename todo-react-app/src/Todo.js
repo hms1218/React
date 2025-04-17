@@ -1,16 +1,30 @@
+import { useState } from "react";
+import {ListItem, ListItemText, InputBase, Checkbox} from '@mui/material';
 //현재 파일에서는 checkBox와 label 컴포넌트를 만들어보자
 // export function Todo(){}
-let Todo = () => {
+let Todo = (props) => {
+
+    const [item, setItem] = useState(props.item);
+
     return(
         //html코드가 들어가는 부분
         //속성을 쓸 때 카멜케이스로 작성한다.
         //onclick -> onClick
         //classname -> className
-        <div className="Todo">
-            <input type="checkbox" id="todo0" name="todo0" value="todo0" />
+        <ListItem>
+            <Checkbox checked={item.done}/>
             {/* label태그는 for속성에 name값으로 연결해서 어떤 요소와 연결될 지 지정 */}
-            <label for="todo0">Todo 컴포넌트 만들기</label>
-        </div>
+            <ListItemText>
+                <InputBase 
+                    inputProps={{"aria-label" : "naked"}}
+                    type = "text"
+                    id={item.id}
+                    name={item.id}
+                    value={item.title}
+                    multiline={true}
+                    fullWidth={true} />
+            </ListItemText>
+        </ListItem>
     )
 }
 
