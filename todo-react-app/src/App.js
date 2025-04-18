@@ -3,22 +3,36 @@ import {useState} from 'react';
 import './App.css';
 //경로는 현재파일을
 import Todo from './Todo';
-import {List, Paper} from '@mui/material';
+import AddTodo from './AddTodo';
+import {Container, List, Paper} from '@mui/material';
+
+//Container
+//레이아웃의 가로 폭을 제한하고, 중앙 정렬 및 기본 패딩을 자동으로 적용해주는 컴포넌트
+
+//주요 props
+//maxWidth : 최대 너비를 지정(xs,sm,md,lg,xl,false)
+//fixed : maxWidth와 관계없이 항상 고정폭 적용
 
 function App() {
   //하나의 할 일을 객체로 관리할 것이다.
   //id, title, done  
-  const [items, setItem] = useState([
-    {
-      id: "0",
-      title: "Hello world 1",
-      done: true
-  },
-  {
-    id: "1",
-    title: "Hello world 2",
-    done: false
-  }]);
+  const [items, setItems] = useState([]);
+
+  //Todo를 추가하기 위한 백엔드 콜을 대신할 가짜함수를 만들어보자.
+  const add = (item) => {
+    //newItem 객체가 하나의 Todo
+    const newItem = {
+      ...item,
+      id: "ID-" + items.length,
+      done: false
+    }
+    // prev : useState의 초기값이 들어감
+    setItems(prev => [...prev, newItem])
+    console.log("items : ", [...items, newItem]);
+  }
+
+  //상태를 변화시키는 함수를 호출하면 state의 변경사항이 화면에 적용이된다.
+  
 
   //react는 key속성에 들어있는 값을 참고해서, 리스트의 요소가 변경될 경우
   //어떤 요소가 변경되었는지 빠르게 파악할 수 있다.
@@ -37,7 +51,10 @@ function App() {
 
   return (
     <div className="App">
-      {todoItems}
+      <Container maxWidth="md">
+        <AddTodo add={add}/> {/* AddTodo에 add함수를 전달 {add : function add(item) { }*/}
+        {todoItems}
+      </Container>
       {/* <Todo item={item2}/> */}
       {/*컴포넌트의 호출 <컴포넌트명 /> */}
     </div>
