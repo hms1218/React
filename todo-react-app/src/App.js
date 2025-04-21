@@ -31,6 +31,22 @@ function App() {
     console.log("items : ", [...items, newItem]);
   }
 
+  //삭제를 해주는 deleteItem()함수 만들기
+  //DELETE FROM TABLE WHERE ID=0;
+  const deleteItem = (item) => {
+    //배열에서 삭제하려고 하는 아이템을 찾는다.
+    const newItems = items.filter(e => e.id !== item.id);
+    //삭제할 아이템을 제외한 아이템을 다시 배열에 지정한다.
+    setItems([...newItems]);
+  }
+
+  const editItem = () => {
+    setItems([...items]); // 재 렌더링 해준다.
+  }
+  
+
+
+
   //상태를 변화시키는 함수를 호출하면 state의 변경사항이 화면에 적용이된다.
   
 
@@ -44,7 +60,7 @@ function App() {
     <Paper style={{margin: 16}}>
       <List> {/*일련의 항목을 세로로 나열하는 컨테이너 역할*/}
         {items.map((item) => (
-          <Todo item={item} key={item.id} />
+          <Todo item={item} key={item.id} deleteItem={deleteItem} editItem={editItem}/>
           ))}
       </List>
     </Paper>
@@ -68,3 +84,7 @@ export default App;
 
 //2. Todo를 두 개 연속으로 늘어 놓는 대신, 배열과 반복문을 이용해보자
 //반복문으로 생성된 Todo컴포넌트들을 어떻게 넘길것인가?
+
+
+//useState(), 기능을 하는 함수를 App.js에 만든 이유?
+//전체 Todo리스트는 App.js에서 관리를 하기 때문에
