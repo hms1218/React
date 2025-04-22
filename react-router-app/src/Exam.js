@@ -122,7 +122,7 @@ const ProductDetail = () => {
 
     return(
         <div>
-           <nav>
+           {/* <nav>
                 <ul>
                     {detail_filter.map(detail=> (
                         <li key={detail.id}>
@@ -130,7 +130,10 @@ const ProductDetail = () => {
                         </li>
                     ))}
                 </ul>
-            </nav>
+            </nav> */}
+            <ul>
+                <li>{detail_filter.name} : {detail_filter.description}</li>
+            </ul>
         </div>
     )
 
