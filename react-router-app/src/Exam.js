@@ -51,6 +51,9 @@ const Home = () => {
  //- 카테고리
 const Categories = () => { 
 
+    // key에 고유한 값이 들어가지만
+    // li의 값이 변경될 때 react가 구분을 하는 값으로 인식
+
     const categories = [
     { id: 1, name: '전자제품' },
     { id: 2, name: '의류' },
@@ -59,15 +62,14 @@ const Categories = () => {
 
     return(
         <div>
-            <nav>
-                <ul>
-                    {categories.map(categori=> (
-                        <li key={categori.id}>
-                            <Link to={`/categories/${categori.id}`}>{categori.name}</Link>
-                        </li>
-                    ))}
-                </ul>
-            </nav>
+            <h2>카테고리 목록</h2>
+            <ul>
+                {categories.map(categori=> (
+                    <li key={categori.id}>
+                        <Link to={`/categories/${categori.id}`}>{categori.name}</Link>
+                    </li>
+                ))}
+            </ul>
         </div>
     )
 }
@@ -90,15 +92,14 @@ const Products = () => {
 
     return(
         <div>
-           <nav>
-                <ul>
-                    {product_filter.map(product=> (
-                        <li key={product.id}>
-                            <Link to={`/categories/${categoriId}/products/${product.id}`}>{product.name}</Link>
-                        </li>
-                    ))}
-                </ul>
-            </nav>
+            <h2>카테고리 {categoriId}목록</h2>
+            <ul>
+                {product_filter.map(product=> (
+                    <li key={product.id}>
+                        <Link to={`/categories/${categoriId}/products/${product.id}`}>{product.name}</Link>
+                    </li>
+                ))}
+            </ul>
         </div>
     )
 
@@ -118,22 +119,20 @@ const ProductDetail = () => {
     { id: 6, name: '우유', description: '신선한 우유입니다.', categoryId: '3' },
     ];
 
-    const detail_filter = p_detail.filter(x => x.id == productsId);
+    //find : 주로 배열 내에서 조건식을 만족하는 값/ 인덱스를 찾아올때 사용.
+    const detail_filter = p_detail.find(x => x.id === Number(productsId) && x.categoryId === categoriId);
+    //filter -> 원하는 조건이 없을 때 빈배열을 반환
+    //find -> 못찾으면 undefined
+
+    if(!detail_filter){
+        return <div>상품을 찾을 수 없습니다.</div>
+    }
 
     return(
         <div>
-           {/* <nav>
-                <ul>
-                    {detail_filter.map(detail=> (
-                        <li key={detail.id}>
-                            <Link to={`/categories/${categoriId}/products/${productsId}`}>{detail.name} : {detail.description}</Link>
-                        </li>
-                    ))}
-                </ul>
-            </nav> */}
-            <ul>
-                <li>{detail_filter.name} : {detail_filter.description}</li>
-            </ul>
+            <p>id : {detail_filter.id}</p>
+            <p>name : {detail_filter.name}</p>
+            <p>설명 : {detail_filter.description}</p>
         </div>
     )
 
