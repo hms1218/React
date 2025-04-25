@@ -99,7 +99,9 @@ export const Async = () => {
 
 // 2. Promise객체
 // - 비동기 작업이 완료되었을 때 성공 또는 실패 결과를 반환하는 객체
-// - PromiseState : fulfilled -> 성공 error -> 실패
+// - promise객체는 생성 직후 pending 상태이며
+// - PromiseState : 
+// pending -> 아직 결과가 결정되지 않은 초기 상태 ,fulfilled -> 비동기 작업 성공 rejected -> 비동기 작업 실패
 
 // 3. async/await
 // - Promise를 기반으로 한 비동기 처리 방식으로, 동기처리처럼 보이지만 비동기 작업을 수행할 수 있게 해준다.
