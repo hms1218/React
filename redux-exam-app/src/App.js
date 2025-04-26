@@ -1,12 +1,14 @@
 import './App.css';
 import {Provider, useDispatch, useSelector} from 'react-redux';
-import { store } from './TodoStore';
+import { store } from './Store';
 import { addTodo, removeTodo } from './TodoAction';
 import { useState } from 'react';
 
+import { login, logout } from './LoginAction';
+
 const TodoApp = () => {
 
-    const todos = useSelector((state) => state.todos);
+    const todos = useSelector((state) => state.todo.todos);
 
     const [input, setInput] = useState('')
 
@@ -45,10 +47,53 @@ const TodoApp = () => {
 
 }
 
+const LoginApp = () => {
+  
+  const {name, isLoggedin} = useSelector(state => state.login);
+  
+  const [nameInput, setNameInput] = useState('');
+
+  const dispatch = useDispatch();
+
+  const handleLogin = () => {
+    if(nameInput.trim()){
+      dispatch(login(nameInput));
+      setNameInput('');
+    }
+  }
+
+  const handleLogout = () => {
+    dispatch(logout());
+  }
+
+  return(
+    <div>
+      <h2>Login Status</h2>
+      {isLoggedin ? 
+        (
+        <div>
+          <p>Welcome, {name}!</p>
+          <button onClick={handleLogout}>Logout</button>
+        </div>
+        ) : 
+        (
+        <div>
+          <input value={nameInput} onChange={(e) => setNameInput(e.target.value)} placeholder='Enter your username'/>
+          <button onClick={handleLogin}>Login</button>
+        </div>
+      )
+    }
+    </div>
+  )
+
+
+}
+
 function App() {
   return (
     <Provider store={store}>
       <TodoApp />
+      <LoginApp />
     </Provider> 
   );
 }
