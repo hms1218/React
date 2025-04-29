@@ -6,6 +6,8 @@ import { useState } from 'react';
 
 import { login, logout } from './LoginAction';
 
+import { addToCart, removeFromCart } from './CartAction';
+
 const TodoApp = () => {
 
     const todos = useSelector((state) => state.todo.todos);
@@ -89,11 +91,59 @@ const LoginApp = () => {
 
 }
 
+export const CartApp = () => {
+  const products = [
+    { id: 1, name: 'Apple' },
+    { id: 2, name: 'Banana' },
+    { id: 3, name: 'Orange' },
+  ];
+
+  const cart = useSelector(state => state.cart.products);
+
+  const dispatch = useDispatch();
+
+  const handleAddToCart = (id,name) => {
+    dispatch(addToCart(id,name))
+  }
+
+  const handleRemoveFromCart = (id) => {
+    dispatch(removeFromCart(id))
+  }
+
+  return(
+    <div>
+      <h1>Products</h1>
+      <ul>
+        {products.map((product) => (
+          <li key={product.id}>
+            {product.name}
+            <button onClick={() => handleAddToCart(product.id, product.name)}>Add to Cart</button>
+          </li>
+        ))}
+      </ul>
+           
+      <h1>Shopping Cart</h1>
+      {cart.length === 0 ? <p>"Your Cart is empty"</p> : 
+      (<ul>
+        {cart.map((product) => (
+          <li key={product.id}>
+            {product.name} (x{product.quantity})
+            <button onClick={() => handleRemoveFromCart(product.id)}>Remove</button>
+          </li>
+        ))}
+      </ul>
+      )}
+    </div>
+  )
+}
+
+
 function App() {
   return (
     <Provider store={store}>
       <TodoApp />
       <LoginApp />
+      <CartApp />
     </Provider> 
   );
 }
