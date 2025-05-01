@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { RouterEx } from './router/routers';
 import { MyProvider } from './context/context';
 import { Parent } from './context/parent';
+import { Login } from './logIn/login';
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
       <MyProvider> {/* 감싸서 Parent의 하위 객체에서 사용 가능 */}
         <Parent />
       </MyProvider>
+      <Login />
     </>
   );
 }
