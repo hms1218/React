@@ -1,0 +1,13 @@
+.message-error {
+    color: red;
+    font-weight: bold;
+  }
+
+  .message-success {
+    color: green;
+  }
+
+  .navigation.dark {
+    background-color: black;
+    color: white;
+  }
