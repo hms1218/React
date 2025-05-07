@@ -3,12 +3,12 @@ import { ThemeContext } from "../context/context";
 
 export const Home = () => {
 
-    const {theme, toggleTheme} = useContext(ThemeContext);
+    const {theme} = useContext(ThemeContext);
 
     return(
         <div>
             <h2>Welcome to My React DashBoard</h2>
-            <p>Current Theme : {theme}</p>
+            <p>Current Theme : <strong>{theme}</strong></p>
         </div>
     )
 }

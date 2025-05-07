@@ -8,7 +8,7 @@ export const Settings = () => {
     return(
         <div>
             <h1>Settings</h1>
-            <p>Current Theme : {theme}</p>
+            <p>Current Theme : <strong>{theme}</strong></p>
             <button onClick={toggleTheme}>Toggle Theme</button>
         </div>
     )

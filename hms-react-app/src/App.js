@@ -1,7 +1,7 @@
 import './App.css';
 import { useContext } from 'react';
 import { ThemeContext } from './context/context';
-import { Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { NavBar } from './navigation/navigation';
 import { Posts } from './pages/posts';
 import { Settings } from './pages/settings';
@@ -9,7 +9,7 @@ import { Home } from './pages/home';
 
 function App() {
 
-  const {theme, toggleTheme} = useContext(ThemeContext);
+  const {theme} = useContext(ThemeContext);
 
   const style = {
     backgroundColor: theme === 'light' ? '#f9f9f9' : '#333',
@@ -22,12 +22,14 @@ function App() {
 
   return (
     <div style={style}>
+      <BrowserRouter>
       <NavBar />
       <Routes>
         <Route path="/src/pages/home.js" element={<Home />}/>
         <Route path="/src/pages/posts.js" element={<Posts />}/>
         <Route path="/src/pages/settings.js" element={<Settings />}/>
       </Routes>
+      </BrowserRouter>
     </div>
   );
 }
