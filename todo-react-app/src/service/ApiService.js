@@ -29,8 +29,19 @@ export function call(api,method,request){
             return response.data;
         })
         .catch(error => {
-            const m_error = error;
-            return m_error;
+            console.log("에러코드 : ", error.status);
+            if(error.status === 403){
+                //403코드면 로그인 path로 가라
+                window.location.href="/login";
+            }
         })
 
+}
+
+export function signin(userDTO){
+    return call("/auth/signin","POST",userDTO)
+            .then(response => {
+                console.log("response : " + response);
+                alert("로그인 토큰 : " + response.token);
+            })
 }
