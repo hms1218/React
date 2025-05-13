@@ -4,9 +4,9 @@ import './App.css';
 //경로는 현재파일을
 import Todo from './Todo';
 import AddTodo from './AddTodo';
-import {Container, List, Paper} from '@mui/material';
-import axios from 'axios';
-import {call} from './service/ApiService'
+import {AppBar, Button, Container, Grid, List, Paper, Toolbar, Typography} from '@mui/material';
+//import axios from 'axios';
+import {call, signout} from './service/ApiService'
 
 //Container
 //레이아웃의 가로 폭을 제한하고, 중앙 정렬 및 기본 패딩을 자동으로 적용해주는 컴포넌트
@@ -19,12 +19,16 @@ function App() {
   //하나의 할 일을 객체로 관리할 것이다.
   //id, title, done  
   const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   //최초 렌더링 시 1번만 실행
   useEffect(() => {
     //조회하기
     call("/todo","GET")
-      .then(result => setItems(result.data))
+      .then(result => {
+        setItems(result.data)
+        setLoading(false)
+      })
   },[]);
   
   //추가하기
@@ -58,7 +62,7 @@ function App() {
 
   //react는 key속성에 들어있는 값을 참고해서, 리스트의 요소가 변경될 경우
   //어떤 요소가 변경되었는지 빠르게 파악할 수 있다.
-  const todoItems = items.length > 0 && 
+  const todoItems = items?.length > 0 && 
     //Paper컴포넌트
     //종이 같은 표면 효과를 제공하는 컨테이너 컴포넌트
     //elevation(그림자 깊이)를 통해 높낮이를 표현하고
@@ -71,14 +75,49 @@ function App() {
       </List>
     </Paper>
 
-  return (
-    <div className="App">
+    //네비게이션 바
+    let navigationBar = (
+      <AppBar position='static'>
+        <Toolbar>
+          <Grid justifyContent="space-between" container sx={{flexGrow: 1}}>
+            <Grid item>
+              <Typography variant='h6'>오늘의 할 일</Typography>
+            </Grid>
+            <Grid item>
+              <Button color='inherit' raised onClick={signout}>
+                로그아웃
+              </Button>
+            </Grid>
+          </Grid>
+        </Toolbar>
+      </AppBar>
+    )
+
+  //로딩중이 아닐 때 렌더링할 부분
+  let todoListPage = (
+    <div>
+      {navigationBar}
       <Container maxWidth="md">
         <AddTodo add={add}/> {/* AddTodo에 add함수를 전달 {add : function add(item) { }*/}
-        {todoItems}
+        <div className='TodoList'>
+          {todoItems}
+        </div>
       </Container>
       {/* <Todo item={item2}/> */}
       {/*컴포넌트의 호출 <컴포넌트명 /> */}
+    </div>
+  )
+
+  //로딩중일 때 렌더링할 부분
+  let loadingPage = <h1>로딩중...</h1>
+  let content = loadingPage;
+
+  if(!loading){
+    content = todoListPage;
+  }
+  return (
+    <div className="App">
+      {content}
     </div>
   );
 }
