@@ -1,6 +1,6 @@
 import './App.css';
 import { useEffect, useState } from 'react';
-import {P_Info}  from './P_info';
+import { P_Info } from './P_info';
 import { call } from './ApiService';
 
 function App() {
@@ -23,9 +23,11 @@ function App() {
       )
   }
 
+  
+
   return (
     <div>
-      <P_Info items={items}/>
+      <P_Info items={items} add={add}/>
     </div>
   );
 }
