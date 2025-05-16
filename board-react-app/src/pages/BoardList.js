@@ -4,6 +4,7 @@ import {Link, useNavigate} from 'react-router-dom'
 import { BoardContext } from "../context/BoardContext";
 import { mockData } from "../mockData";
 import '../css/BoardList.css'
+import { call } from "../ApiService";
 
 const BoardList = () => {
 
@@ -15,14 +16,28 @@ const BoardList = () => {
 
     const navigate = useNavigate();
 
+    const getBoardList = async () => {
+        try{
+            const response = await axios("http://localhost:10000/api/board/all")
+            console.log(response.data.data);
+            setBoardList(response.data.data);
+            setTotalPages(Math.ceil(response.data.data.length/postsPerPage));
+        } catch (error){
+            console.error("데이터를 불러오는 중 오류 발생:", error)
+        }
+    }
+
     useEffect(() => {
+        // call("/api/board/all","GET")
+        //     .then(result => setBoardList(result.data))
+        getBoardList();
         //백엔드와 통신하는 척 -> boardList에 가짜데이터를 넣는다.
         //setBoardList(boardList);
         //게시판의 총 페이지 수
-        setTotalPages(Math.ceil(boardList.length/postsPerPage));
-        setCurrentPage(1);
+        // setTotalPages(Math.ceil(boardList.length/postsPerPage));
+        // setCurrentPage(1);
         
-    },[postsPerPage,setBoardList])
+    },[postsPerPage])
     // ㄴ 게시글 개수와, 총 페이지 수가 변할 때마다 재렌더링
 
     //페이지 계산
@@ -49,7 +64,7 @@ const BoardList = () => {
         // return window.location.href="/write";
         navigate("/write")
     }
-
+    
     return(
         <div className="board-container">
             <h1 className="board-title">게시판</h1>
@@ -59,13 +74,13 @@ const BoardList = () => {
             <br />
             {/* 목업 데이터 출력하기 */}
             <ul className="board-posts">
-                {currentPosts.map((board) => (
+                {boardList.length > 0 ? (currentPosts.map((board) => (
                     <li key={board.id} className="board-post-item">
                         <Link to={`/post/${board.id}`}>{board.title}</Link>
                         <span>작성자 : {board.author} </span>
                         <span> | 작성 시간 : {board.writingTime}</span>
                     </li>
-                ))}
+                ))) : (<p>게시글이 없습니다.</p>)}
             </ul>
             {/* 한번에 보여줄 게시글 수 조정 */}
             <div className="board-posts-per-page">

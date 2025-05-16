@@ -4,7 +4,7 @@ import { mockData } from "../mockData";
 export const BoardContext = createContext(null);
 
 const BoardProvider = ({children}) => {
-    const [boardList, setBoardList] = useState(mockData)
+    const [boardList, setBoardList] = useState([])
 
     return(
         <BoardContext.Provider value={{boardList,setBoardList}}>

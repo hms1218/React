@@ -1,8 +1,9 @@
-import { useState, useContext} from "react";
+import { useState, useContext, useEffect} from "react";
 import { BoardContext } from "../context/BoardContext";
 import CustomButton from "../component/CustomButton";
 import CustomInput from "../component/CustomInput";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const WritePost = () => {
 
@@ -12,20 +13,46 @@ const WritePost = () => {
     const [author, setAuthor] = useState("");
     const [content, setContent] = useState("");
 
-    const navigate = useNavigate();
+    const navigate = useNavigate(); 
 
-    const savePost = (e) => {
+    // 매개변수에 config 하나만 줌
+    // const response = await axios(
+    //     {
+    //          url:"http://localhost:10000/api/board/add",
+    //          method: "post",
+    //          data:newPost,
+    //          headers:{
+    //              "Content-Type" : "application/json"
+    //          }
+    //     }
+    // )
+
+    const savePost = async (e) => {
         e.preventDefault();
         const newPost = {
-            id: boardList.length+1,
             title,
             author,
-            writingTime : new Date().toISOString(),
             content
         }
-        setBoardList([...boardList,newPost])
-        alert("게시물이 등록되었습니다.")
-        navigate("/");
+        //매개변수가 3개 (url, method, data)
+        const response = await axios.post("http://localhost:10000/api/board/add", newPost,
+        {
+           headers:{
+                "Content-Type" : "application/json"
+            }
+        }
+    )
+        if(response.status === 200){
+            alert("게시물이 등록되었습니다.")
+            navigate("/");
+        } else{
+            throw new Error("게시물 등록 실패")
+        }
+
+        // console.log(response.data.data);
+        // setBoardList(response.data.data);
+        // setBoardList([...boardList,newPost])
+        // alert("게시물이 등록되었습니다.")
     }
 
     const CancelButton = () => {

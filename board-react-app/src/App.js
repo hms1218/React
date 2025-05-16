@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import BoardList from './pages/BoardList';
 import WritePost from './pages/WritePost';
 import PostDetail from './pages/PostDetail';
+import EditPost from './pages/EditPost';
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
           <Route path="/" element={<BoardList />} />
           <Route path="/write" element={<WritePost />} />
           <Route path="/post/:id" element={<PostDetail />} />
-          {/* <Route path="/edit/:id" element={<EditPost />} /> */}
+          <Route path="/edit/:id" element={<EditPost />} />
         </Routes>
       </BrowserRouter>
     </BoardProvider>
