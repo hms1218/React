@@ -14,15 +14,21 @@ const PostDetail = () => {
 
     const navigate = useNavigate();
 
+    const getIdPost = async () => {
+        const response = await axios(`http://localhost:10000/api/board/${id}`);
+        setItem(response.data.data[0]);
+        // console.log(response.data.data[0]);
+    }
+
     useEffect(() => {
         //게시글 배열에서, 넘어온 id와 일치하는 게시글을 한 건 찾아서 변수에 담는다.
-        const post = boardList.find((item) => item.id === parseInt(id));
-
-        if(post){
-            setItem(post);
-        } else{
-            console.error('게시글을 찾을 수 없습니다.');
-        }
+        // const post = boardList.find((item) => item.id === parseInt(id));
+        getIdPost();
+        // if(post){
+        //     setItem(post);
+        // } else{
+        //     console.error('게시글을 찾을 수 없습니다.');
+        // }
     },[id]);
 
     // useEffect(() => {
@@ -37,17 +43,20 @@ const PostDetail = () => {
     const handleDelete = async () => {
         if(window.confirm("게시글을 삭제하시겠습니까?")){
             //게시글 한 건 삭제
-            const response = await axios.delete(`http://localhost:10000/api/board/delete/${id}`)
-
+            await axios.delete(`http://localhost:10000/api/board/${id}`)
             
             //삭제되었습니다 alert창 띄우기
-            if(response.status === 200){
-                setBoardList((prevList) => prevList.filter((post) => post.id !== parseInt(id)));
-                alert("삭제되었습니다");
-                //게시판목록으로 이동
-                navigate("/");
-            }
+            .then(response => {
+                if(response.data){
+                    alert("삭제되었습니다");
+                }
+                else{
+                    alert("삭제 실패.")
+                }
+            })
+            navigate("/");
         }
+        // setBoardList((prevList) => prevList.filter((post) => post.id !== parseInt(id)));
     }
 
     const moveToBoard = () => {

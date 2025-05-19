@@ -80,7 +80,8 @@ const BoardList = () => {
                         <span>작성자 : {board.author} </span>
                         <span> | 작성 시간 : {board.writingTime}</span>
                     </li>
-                ))) : (<p>게시글이 없습니다.</p>)}
+                )).reverse()) : (<p>게시글이 없습니다.</p>)}
+                {/* reverse() 사용하면 게시글을 최근순으로 정렬가능 */}
             </ul>
             {/* 한번에 보여줄 게시글 수 조정 */}
             <div className="board-posts-per-page">

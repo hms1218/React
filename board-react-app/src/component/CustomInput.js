@@ -6,6 +6,7 @@ const CustomInput = ({
     multiline = false,
     rows = 1,
     value,
+    name,
     onChange,
     readOnly = false,
     placeholder = "",
@@ -18,6 +19,7 @@ const CustomInput = ({
             multiline={multiline}
             rows={rows}
             value={value}
+            name={name}
             onChange={onChange}
             margin="normal"
             inputProps={{
