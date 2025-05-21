@@ -5,8 +5,6 @@ import { Link } from "react-router-dom";
 
 const Signup = () => {
 
-
-    
     //주소찾기
     const scriptUrl = 'https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
 
@@ -61,7 +59,7 @@ const Signup = () => {
         setAddress(addr);
 
         //상세 주소 입력 필드로 포커스 이동하기
-        document.querySelector('#sample6_detailAddress').focus();
+        document.querySelector('#extraAddress').focus();
 
     }
 
@@ -104,17 +102,33 @@ const Signup = () => {
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        <TextField
-                            autoComplete="current"
-                            name="address"
-                            variant="outlined"
-                            required
-                            fullWidth
-                            id="address"
-                            label="주소"
-                            type="text"
-                            readOnly
-                        />
+                        <Grid container spacing={1} alignItems="stretch">
+                            <Grid item style={{ flexGrow: 1 }}>
+                                <TextField
+                                    autoComplete="current"
+                                    name="address"
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    id="address"
+                                    label="주소"
+                                    type="text"
+                                    value={address + extraAddress}
+                                    readOnly
+                                />
+                            </Grid>
+                            <Grid>
+                                <Button
+                                    fullWidth
+                                    variant="contained"
+                                    color="primary"
+                                    style={{ height: '100%' }}
+                                    onClick={handleClick}
+                                >
+                                    찾기
+                                </Button>
+                            </Grid>
+                        </Grid>
                     </Grid>
                     <Grid item xs={12}>
                         <TextField
@@ -125,6 +139,8 @@ const Signup = () => {
                             fullWidth
                             id="extraAddress"
                             label="상세주소"
+                            onChange={(e) => setDetailAddress(e.target.value)}
+                            value={detailAddress}
                             type="text"
                         />
                     </Grid>
@@ -151,9 +167,9 @@ const Signup = () => {
                     </Grid>
                 </Grid>
 
-                <Grid container justifyContent="flex-end">
+                <Grid container justifyContent="flex-end" style={{marginTop:"10px"}}>
                     <Grid item>
-                        <Link to="/login" variant="body2">
+                        <Link to="/" variant="body2">
                             이미 계정이 있습니까? 로그인 하세요.
                         </Link>
                     </Grid>
@@ -163,7 +179,7 @@ const Signup = () => {
                
 
 
-        <div className="form-row">
+        {/* <div className="form-row">
             우편번호 : <input
                 type="text"
                 id="sample6_postcode"
@@ -201,7 +217,7 @@ const Signup = () => {
                 value={extraAddress}
                 readOnly
             />
-        </div>
+        </div> */}
 
                 
         </div>
