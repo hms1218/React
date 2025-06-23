@@ -1,0 +1,93 @@
+라우팅
+주소창의 URL과 매칭되는 컴포넌트를 렌더링 하는것
+
+<BrowserRouter>로 컴포넌트를 묶어놔야 라우터를 쓸 수 있다.
+
+<Routes > 라우팅의 그룹
+
+<Route path="url" element=컴포넌트> URL에 맞는 컴포넌트를 렌더링
+
+주소창에 URL을 직접 작성할 수 없으니 해당 URL로 이동할 수 있게 해주는 <Link > 컴포넌트를 사용한다.
+
+<Link to="/경로">
+
+<Link to = {{
+    pathname: '/search',
+    search:'?query=react',
+}}/>
+
+동적라우팅
+<Route path="/productId/:id" element=<Product />
+
+URL에 들어있는 값이 변수에 매핑이 되고
+
+컴포넌트에서 useParams()훅으로 받아서 컴포넌트 내부에서 
+사용할 수 있다.
+
+key
+형제 요소내에서 순서가 바뀌거나, 값이 추가되거나, 삭제되거나 할때 리액트는 바뀌지 않은 요소에 대해서는 굳이 재렌더링을 하지 않는다. 그걸 key를 통해 알 수 있다.
+
+Context API
+리액트에 내장되어있는 데이터를 전역으로 관리할 수 있는 기능
+
+데이터 전달을 위해 여러 단계의 컴포넌트를 거쳐야 하는 상황을 해소할 수 있다.
+
+Context API의 사용법
+
+데이터를 전달하는 방법
+
+1. 부모 컴포넌트에서 props 전달하기
+const Parent = () => {
+	const userName="홍길동"
+	const age = 40;
+	return(
+	    <div>
+		<Child name={userName} age={age} isAdmin={true} />
+	    </div>
+	)
+}
+
+let props = {name:홍길동,age:30,isAdmin:true}
+const Child = (props) => {
+    return(
+	<div>
+	    <p>이름: {props.name}</p>
+	    <p>나이: {props.age}세</p>
+	    <p>관리자여부: {props.isAdmin?'예':'아니오'}</p>
+	</div>
+    )
+}
+
+const Child = ({name,age,isAdmin}) => {
+    return(
+	<div>
+	    <p>이름: {name}</p>
+	    <p>나이: {age}세</p>
+	    <p>관리자여부: {isAdmin?'예':'아니오'}</p>
+	</div>
+    )
+}
+
+2. children으로 내용 전달하기
+JSX태그 사이에 넣은 내용은 props.children으로 전달된다.
+
+const Parent = () => {
+
+	let children = <p>이 내용은 children으로 전달됩니다.</p>
+
+	return(
+	    <Wrapper children = {children} />
+
+	    <Wrapper>
+	        <p>이 내용은 children으로 전달됩니다.</p>
+	    </Wrapper>
+	)
+}
+
+const Wrapper = ({children}) => {
+	return(
+		<div className="wapper">
+			{children}
+		</div>
+	)
+}

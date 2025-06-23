@@ -19,7 +19,9 @@ const hostname = window && window.location && window.location.hostname;
 
 //http://localhost:10000/todo   => 호스트네임 : localhost
 if(hostname === "localhost"){
-    backendHost = "http://localhost:10000"
+    backendHost = "http://localhost:5000";
+} else{
+    backendHost = "http://api.springboothms.store"
 }
 
 export const API_BASE_URL = `${backendHost}`
